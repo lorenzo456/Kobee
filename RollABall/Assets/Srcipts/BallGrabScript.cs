@@ -11,6 +11,8 @@ public class BallGrabScript : MonoBehaviour {
     public float force;
     public float depth;
     public float angle = 30;
+	public int scores = 0;
+	public bool boxTouched;
 
     Vector3 initialPosition;
 
@@ -32,6 +34,7 @@ public class BallGrabScript : MonoBehaviour {
         GetComponent<Rigidbody>().useGravity = false;
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         transform.position = initialPosition; 
+		boxTouched = false;
     }
 
     void OnMouseDown()
@@ -56,5 +59,24 @@ public class BallGrabScript : MonoBehaviour {
         Vector3 dir = Quaternion.AngleAxis(30, Vector3.forward) * Vector3.forward;
         GetComponent<Rigidbody>().AddForce( dir * force);
         Debug.Log("MOUSEUP");
+    }
+
+	void OnTriggerEnter(Collider collision)
+    {
+		
+		Debug.Log("I HIT SOMETHING");
+		Debug.Log(collision.gameObject.name);
+		if(collision.gameObject.name == "Cube")
+		{ boxTouched = true;
+		}
+		else if (collision.gameObject.name == "Floor")
+		{ 
+			if (boxTouched == true)
+			{scores -= 1;}
+			else
+			{scores += 1;}
+		initializeBall();
+		}
+
     }
 }
