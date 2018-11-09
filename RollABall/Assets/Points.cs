@@ -12,6 +12,8 @@ public class Points : MonoBehaviour {
         {
             Debug.Log("Player touched me!");
             point++;
+
+
         }
     }
 
